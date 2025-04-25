@@ -1,0 +1,1 @@
+A VR Multiplayer classroom done with vivox and Photon, with voice and chat comunication and a synced Board where the Teacher could  put archieves from the computer (videos, photos, music, documents), could open a browser or a white board.
