@@ -1,0 +1,26 @@
+fileFormatVersion: 2
+guid: 0637c42c486a5ac428ba2f2158f4e9cd
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Futura Md BT
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 929cf0985e7367b49af13b475542d671, type: 3}
+  - {fileID: 12800000, guid: 51179575f03f9d747a3551adc30a67ef, type: 3}
+  - {fileID: 12800000, guid: 405f86448da68c44099c715bf372fa7a, type: 3}
+  - {fileID: 12800000, guid: e5c34275b5e97bc499d179dbcb877b64, type: 3}
+  - {fileID: 12800000, guid: a13abc7f2b3efee49929c6219f280cff, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

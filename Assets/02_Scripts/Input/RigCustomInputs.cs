@@ -1,0 +1,105 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.InputSystem;
+
+public class RigCustomInputs : MonoBehaviour     //THIS SCRIPT WILL CONTROL SMALL THINGS SUCH AS GET UP FROM CHAIR, EMOTES, VOIP, RAYCASTS AND ETC
+{
+    [SerializeField] private HardwareRig rig;
+    //[SerializeField] private FusionVoiceClient voiceClient;
+    [SerializeField] private UI_Pause pauseUI;
+
+    public InputActionProperty mouseClickAction;
+    public InputActionProperty voipButton;
+    public InputActionProperty raiseHandButton;
+    public InputActionProperty moveButton;
+    public InputActionProperty pauseButton;
+
+    public GameObject _VrHud;
+    public GameObject ScreensAndHudManager;
+    int hudCount;
+
+    private void Awake()
+    {
+        mouseClickAction.action.Enable();
+        mouseClickAction.action.performed += GetUpChair;
+
+        voipButton.action.Enable();
+        voipButton.action.performed += OnVoip;
+        voipButton.action.canceled += OffVoip;
+
+        raiseHandButton.action.Enable();
+        raiseHandButton.action.performed += HideHud;
+        raiseHandButton.action.canceled += LowerHand;
+
+
+        moveButton.action.Enable();
+        moveButton.action.performed += GetPlayerMoveDirection;
+        moveButton.action.canceled += StopPlayerMoveDirection;
+
+        pauseButton.action.Enable();
+        pauseButton.action.performed += PauseGame;
+        hudCount = 1;
+
+    }
+    public void GetUpChair(InputAction.CallbackContext ctx)
+    {
+        if (rig.chairSitted)
+        {
+            rig.chairSitted.PlayerGetUp();
+        }
+    }
+
+
+    public void OnVoip(InputAction.CallbackContext ctx)
+    {
+        //voiceClient.PrimaryRecorder.TransmitEnabled = true;
+        rig.localIsTalking = true;
+    }
+    public void OffVoip(InputAction.CallbackContext ctx)
+    {
+        //voiceClient.PrimaryRecorder.TransmitEnabled = false;
+        rig.localIsTalking = false;
+    }
+
+
+    public void HideHud(InputAction.CallbackContext ctx) //REPLACE MAYBE FOR A BUTTON THAT OPENS RADIAL MENU WITH EMOTES
+    {
+        if(hudCount < 1)
+        {
+            _VrHud.transform.GetChild(0).GetComponent<PopCanvas>().PopIn();
+            _VrHud.transform.GetChild(1).GetComponent<PopCanvas>().PopIn();
+            hudCount++;
+        }
+        else
+        {
+            _VrHud.transform.GetChild(0).GetComponent<PopCanvas>().PopOut();
+            _VrHud.transform.GetChild(1).GetComponent<PopCanvas>().PopOut();
+            hudCount = 0;
+        }
+       
+        //rig.actualEmote = Emote.RaiseHand;
+    }
+
+
+    public void LowerHand(InputAction.CallbackContext ctx) //REPLACE MAYBE FOR A BUTTON THAT OPENS RADIAL MENU WITH EMOTES
+    {
+        //rig.actualEmote = Emote.None;
+    }
+
+    public void GetPlayerMoveDirection(InputAction.CallbackContext ctx)
+    {
+        rig.moveDir = ctx.ReadValue<Vector2>();
+    }
+
+    public void StopPlayerMoveDirection(InputAction.CallbackContext ctx)
+    {
+        rig.moveDir = Vector2.zero;
+    }
+
+    public void PauseGame(InputAction.CallbackContext ctx)
+    {
+        pauseUI.gameObject.SetActive(true);
+        pauseUI.DynamicPause();
+    }
+}
